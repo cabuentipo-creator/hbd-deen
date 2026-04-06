@@ -2,39 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Deen_Birthday_Final_v2.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HBD Deen! ✨</title>
+    
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jscex.min.js"></script>
+    <script type="text/javascript" src="jscex-parser.js"></script>
+    <script type="text/javascript" src="jscex-jit.js"></script>
+    <script type="text/javascript" src="jscex-builderbase.min.js"></script>
+    <script type="text/javascript" src="jscex-async.min.js"></script>
+    <script type="text/javascript" src="jscex-async-powerpack.min.js"></script>
+    <script type="text/javascript" src="functions.js" charset="utf-8"></script>
+    <script type="text/javascript" src="love.js" charset="utf-8"></script>
+    
     <style>
-        body { background: #0d1117; color: #c9d1d9; font-family: 'Consolas', monospace; padding: 40px; }
-        .comment { color: #8b949e; font-style: italic; }
-        .keyword { color: #ff7b72; }
-        .string { color: #a5d6ff; }
-        .function { color: #d2a8ff; }
-        .heart { color: #f85149; font-size: 20px; }
-        .container { border: 1px solid #30363d; padding: 20px; border-radius: 6px; background: #161b22; }
+        /* KINI NA ANG BAG-ONG DESIGN, DILI NA KAILANGAN OG LAING FILE */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffe6eb; /* Cute Baby Pink Background */
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+        #main {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #wrap {
+            width: 100%;
+            max-width: 500px; /* Para sakto ra sa phone */
+            position: relative;
+            margin-top: 20px;
+        }
+        #text {
+            width: 85%;
+            margin: 0 auto;
+            color: #d63384; /* Dark Pink para sa Text */
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+        #code { display: none; }
+        #clock-box {
+            text-align: center;
+            color: #ff69b4;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        #canvas {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <p class="comment">// Error 404: Birthday Wish Not Found earlier</p>
-    <p class="comment">// Debugging complete. Initializing "The Bawi Protocol"...</p>
-    
-    <p><span class="keyword">function</span> <span class="function">celebrateDeen</span>() {</p>
-    <p style="padding-left: 20px;">
-        <span class="keyword">const</span> <span class="string">message</span> = <span class="string">"Happy Birthday, Deen! ❤️"</span>;<br>
-        <span class="keyword">const</span> <span class="string">status</span> = <span class="string">"Dishwasher of the Year is now Active"</span>;<br><br>
+    <div id="main">
+        <audio id="myAudio">
+            <source src="aud.mp3" type="audio/mp3" />
+        </audio>
         
-        <span class="function">console.log</span>(<span class="string">"Sorry kaayo 'loading' ang server nako ganiha..."</span>);<br>
-        <span class="function">console.log</span>(<span class="string">"Bitaw, unta nindot imong special day diha."</span>);<br>
-        <span class="function">console.log</span>(<span class="string">"You deserve all the happiness today!"</span>);
-    </p>
-    <p>}</p>
+        <div id="wrap">
+            <div id="text">
+                <div id="code">
+                    <span class="say">Happy Birthday! 🎈</span><br>
+                    <span class="say">Sorry kaayo ganiha ha,</span><br>
+                    <span class="say">murag loading pa gyud ko</span><br>
+                    <span class="say">pag-good morning nako nimo. 😅</span><br><br>
+                    <span class="say">Happy birthday, <b>Deen</b>! 🎂</span><br>
+                    <span class="say">Unta nindot imong adlaw diha</span><br>
+                    <span class="say">uban imong family. ✨</span><br><br>
+                    <span class="say">Bisag layo ko,</span><br>
+                    <span class="say">I'm cheering for you today. ❤️</span>
+                </div>
+            </div>
+            
+            <div id="clock-box">
+                Enjoy your special day, Deen! ✨ (I-click ang screen!)
+            </div>
+            
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
 
-    <p><span class="function">celebrateDeen</span>(); <span class="heart">❤️</span></p>
-    
-    <hr style="border: 0.5px solid #30363d;">
-    <p class="comment">/* P.S. Ready na ko mo-kanta (sintonado) later via call! */</p>
-</div>
+    <script>
+    (function() {
+        var canvas = $('#canvas');
+        var width = $(window).width() > 500 ? 500 : $(window).width();
+        var height = 600; 
+        
+        canvas.attr("width", width);
+        canvas.attr("height", height);
 
+        var opts = {
+            seed: { x: width / 2 - 20, color: "rgb(190, 26, 37)", scale: 2 },
+            branch: [ [535, 680, 570, 250, 500, 200, 30, 100, [ [540, 500, 455, 417, 340, 400, 13, 100, [ [450, 435, 434, 430, 394, 395, 2, 40] ] ], [550, 445, 600, 356, 680, 345, 12, 100, [ [578, 400, 648, 409, 661, 426, 3, 80] ] ], [539, 281, 537, 248, 534, 217, 3, 40], [546, 397, 413, 247, 328, 244, 9, 80, [ [427, 286, 383, 253, 371, 205, 2, 40], [498, 345, 435, 315, 395, 330, 4, 60] ] ], [546, 357, 608, 252, 678, 221, 6, 100, [ [590, 293, 646, 277, 648, 271, 2, 80] ] ] ] ] ],
+            bloom: { num: 700, width: 1080, height: 650 },
+            footer: { width: 1200, height: 5, speed: 10 }
+        }
+
+        var tree = new Tree(canvas[0], width, height, opts);
+        var seed = tree.seed;
+        var hold = 1;
+
+        // Auto-play music ig-click
+        canvas.click(function(e) {
+            document.getElementById("myAudio").play();
+            var offset = canvas.offset(), x, y;
+            x = e.pageX - offset.left; y = e.pageY - offset.top;
+            if (seed.hover(x, y)) {
+                hold = 0; canvas.unbind("click"); canvas.unbind("mousemove"); canvas.removeClass('hand');
+            }
+        }).mousemove(function(e) {
+            var offset = canvas.offset(), x, y;
+            x = e.pageX - offset.left; y = e.pageY - offset.top;
+            canvas.toggleClass('hand', seed.hover(x, y));
+        });
+
+        var seedAnimate = eval(Jscex.compile("async", function () {
+            seed.draw();
+            while (hold) { $await(Jscex.Async.sleep(10)); }
+            while (seed.canScale()) { seed.scale(0.95); $await(Jscex.Async.sleep(10)); }
+            while (seed.canMove()) { seed.move(0, 2); $await(Jscex.Async.sleep(10)); }
+        }));
+
+        var growAnimate = eval(Jscex.compile("async", function () {
+            do { tree.grow(); $await(Jscex.Async.sleep(10)); } while (tree.canGrow());
+        }));
+
+        var flowAnimate = eval(Jscex.compile("async", function () {
+            do { tree.flower(2); $await(Jscex.Async.sleep(10)); } while (tree.canFlower());
+        }));
+
+        var moveAnimate = eval(Jscex.compile("async", function () {
+            tree.snapshot("p1", 240, 0, 610, 680);
+            while (tree.move("p1", 500, 0)) { $await(Jscex.Async.sleep(10)); }
+            tree.snapshot("p2", 500, 0, 610, 680);
+        }));
+
+        var textAnimate = eval(Jscex.compile("async", function () {
+            $("#code").show().typewriter();
+        }));
+        
+        var runAsync = eval(Jscex.compile("async", function () {
+            $await(seedAnimate());
+            $await(growAnimate());
+            $await(flowAnimate());
+            $await(moveAnimate());
+            textAnimate().start();
+        }));
+
+        runAsync().start();
+    })();
+    </script>
 </body>
 </html>
